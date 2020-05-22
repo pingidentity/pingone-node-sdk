@@ -1,0 +1,3 @@
+# node_modules/* is ignored by default
+# Ignore built files
+dist

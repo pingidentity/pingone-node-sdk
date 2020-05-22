@@ -1,0 +1,35 @@
+{
+  "name": "@pingone/nodejs-sdk-jwtVerifier",
+  "version": "1.0.0",
+  "description": "Validate access tokens",
+  "repository": "https://github.com/pingidentity/pingone-node-sdk.git",
+  "main": "dist/@pingone/nodejs-sdk-jwtVerifier.min.js",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "pingidentity",
+    "pingone",
+    "oidc",
+    "OpenId Connect",
+    "authentication",
+    "auth",
+    "jwt"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "build": "webpack --config webpack.config.js"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "jwks-rsa": "1.8.0",
+    "njwt": "1.0.0"
+  },
+  "devDependencies": {
+    "webpack": "4.43.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ]
+}
