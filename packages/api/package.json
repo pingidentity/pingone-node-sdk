@@ -10,7 +10,7 @@
   ],
   "main": "dist/@pingone/nodejs-sdk-api.min.js",
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "@pingone/nodejs-sdk-core": "0.0.1"
   },
   "scripts": {
