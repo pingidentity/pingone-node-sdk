@@ -8,11 +8,12 @@ const SDK_VERSION = require("./package.json").version;
 
 module.exports = {
     target: "node",
-    entry: "./src/api.js",
+    entry: "./src/index.js",
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "@pingone/nodejs-sdk-api.min.js",
-        library: "PingOneAuth",
+        filename: "@ping-identity/p14c-nodejs-sdk.js",
+        library: "PingOneApiClient",
+        globalObject: "this",
         libraryTarget: "umd"
     },
     module: {

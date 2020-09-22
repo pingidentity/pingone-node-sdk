@@ -1,18 +1,21 @@
-const Http = require("@pingone/nodejs-sdk-core/src/http");
+const {Http} = require("@ping-identity/p14c-js-sdk-core");
 
 /**
  * Base client to work with PingOne API
  *
- * @class ApiClient
+ * @class PingOneApiClient
  */
-class ApiClient {
+class PingOneApiClient {
     constructor (config) {
-        this.issuer = `${
+        this.config = config;
+        this.config.issuer = `${
             config.AUTH_URI ? config.AUTH_URI : "https://auth.pingone.com"
-        }/${config.environmentID}/as`;
-        config.issuer = this.issuer;
-        this.apiUrl = `${config.API_URI}/v1/environments/${config.environmentID}`;
-        this.http = new Http(config);
+        }/${config.environmentId}/as`;
+        this.apiUrl = `${
+            config.API_URI ? config.API_URI : "https://api.pingone.com"
+        }/v1/environments/${config.environmentId}`;
+        this.accessToken = config.accessToken;
+        this.http = new Http();
     }
 
     /**
@@ -25,7 +28,9 @@ class ApiClient {
    */
     async addUser (email, username, populationId) {
         const url = `${this.apiUrl}/users`;
-
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
         return this.http.postJson(url, {
             body: {
                 email: email,
@@ -36,7 +41,8 @@ class ApiClient {
             },
             headers: {
                 "Content-type": "application/json"
-            }
+            },
+            accessToken: this.accessToken
         });
     }
 
@@ -47,7 +53,10 @@ class ApiClient {
    */
     async deleteUser (userId) {
         const url = `${this.apiUrl}/users/${userId}`;
-        return this.http.delete(url, null);
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
+        return this.http.delete(url, {accessToken: this.accessToken});
     }
 
     /**
@@ -57,7 +66,10 @@ class ApiClient {
    */
     async findUser (userName) {
         const url = `${this.apiUrl}/users?filter=email eq "${userName}" or username eq "${userName}"`;
-        return this.http.getJson(url, null);
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
+        return this.http.getJson(url, {accessToken: this.accessToken});
     }
 
     /**
@@ -66,7 +78,10 @@ class ApiClient {
    */
     async getPopulations () {
         const url = `${this.apiUrl}/populations`;
-        return this.http.getJson(url, null);
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
+        return this.http.getJson(url, {accessToken: this.accessToken});
     }
 
     /**
@@ -80,13 +95,17 @@ class ApiClient {
    */
     async updateUser (userId, firstName, lastName) {
         const url = `${this.apiUrl}/users/${userId}`;
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
         return this.http.patchJson(url, {
             body: {
                 name: {
                     given: firstName,
                     family: lastName
                 }
-            }
+            },
+            accessToken: this.accessToken
         });
     }
 
@@ -99,6 +118,9 @@ class ApiClient {
    */
     async changePassword (userId, currentPassword, newPassword) {
         const url = `${this.apiUrl}/users/${userId}/password`;
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
 
         return this.http.putJson(url, {
             body: {
@@ -107,7 +129,8 @@ class ApiClient {
             },
             headers: {
                 "Content-type": "application/vnd.pingidentity.password.reset+json"
-            }
+            },
+            accessToken: this.accessToken
         });
     }
 
@@ -120,6 +143,9 @@ class ApiClient {
    */
     async setPassword (userId, password, forceChange = false) {
         const url = `${this.apiUrl}/users/${userId}/password`;
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
 
         return this.http.putJson(url, {
             body: {
@@ -128,7 +154,8 @@ class ApiClient {
             },
             headers: {
                 "Content-type": "application/vnd.pingidentity.password.set+json"
-            }
+            },
+            accessToken: this.accessToken
         });
     }
 
@@ -139,12 +166,16 @@ class ApiClient {
    */
     async sendRecoveryCode (userId) {
         const url = `${this.apiUrl}/users/${userId}/password`;
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
 
         return this.http.postJson(url, {
             headers: {
                 "Content-type":
           "application/vnd.pingidentity.password.sendRecoveryCode+json"
-            }
+            },
+            accessToken: this.accessToken
         });
     }
 
@@ -157,6 +188,9 @@ class ApiClient {
    */
     async recoverPassword (userId, recoveryCode, newPassword) {
         const url = `${this.apiUrl}/users/${userId}/password`;
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
 
         return this.http.postJson(url, {
             body: {
@@ -165,7 +199,8 @@ class ApiClient {
             },
             headers: {
                 "Content-type": "application/vnd.pingidentity.password.recover+json"
-            }
+            },
+            accessToken: this.accessToken
         });
     }
 
@@ -175,7 +210,11 @@ class ApiClient {
    */
     async getPasswordPattern () {
         const url = `${this.apiUrl}/passwordPolicies`;
-        return this.http.getJson(url, null).then(policies => {
+        if (!this.accessToken) {
+            this.accessToken = await this.getAccessToken();
+        }
+
+        return this.http.getJson(url, {accessToken: this.accessToken}).then(policies => {
             const passwordPolicies = policies._embedded.passwordPolicies;
             const defaultPasswordPolicy = passwordPolicies.filter(
                 policy =>
@@ -204,6 +243,34 @@ class ApiClient {
             }
         });
     }
-}
 
-module.exports = ApiClient;
+    async getAccessToken () {
+        const params = {
+            // eslint-disable-next-line camelcase
+            grant_type: "client_credentials",
+            scope: this.config.scopes,
+            // eslint-disable-next-line camelcase
+            client_id: this.config.clientId,
+            // eslint-disable-next-line camelcase
+            client_secret: this.config.clientSecret
+        };
+        const body = Object.entries(params)
+            .map(p => `${encodeURIComponent(p[0])}=${encodeURIComponent(p[1])}`)
+            .join("&");
+        const response = await this.http.fetch(`${this.config.issuer}/token`, {
+            method: "POST",
+            body: body,
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+        const accessToken = await response.json();
+        if (!accessToken || !accessToken.access_token) {
+            throw new Error("Could not get access_token");
+        } else {
+            return accessToken.access_token;
+        }
+    }
+}
+module.exports = PingOneApiClient;
