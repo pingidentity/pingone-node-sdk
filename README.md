@@ -25,19 +25,14 @@ To access PingOne resources the application should be configured with a `client_
 
 # Installation
 
-
-To install [@ping-identity/p14c-nodejs-sdk](https://www.npmjs.com/package/@ping-identity/p14c-nodejs-sdk) you can run these commands in your project root folder:
-
-```bash
-# yarn
-yarn add @ping-identity/p14c-nodejs-sdk
+To start and play with `p14c-nodejs-sdk` you need to:
+ 1. Install all requirements using: `npm install` or `yarn install`
+ 2. This library needs a newly build version of `@ping-identity/p14c-js-sdk-core` from [github](https://github.com/pingidentity/pingone-javascript-sdk/tree/master/packages/core/dist/node/%40ping-identity) rather from npm registry.
+So, you need to make this little tweak:
+```shell script
+cd .. && git clone https://github.com/pingidentity/pingone-javascript-sdk.git
+cp ./pingone-javascript-sdk/packages/core/dist/node/@ping-identity/p14c-js-sdk-core.js ./pingone-node-sdk/node_modules/@ping-identity/p14c-nodejs-sdk/node_modules/@ping-identity/p14c-js-sdk-core/dist/@ping-identity
 ```
-or
-```
-# npm
-npm install --save @ping-identity/p14c-nodejs-sdk
-```
-
 # Getting Started
 
 ## Step 1: Configure the client object
@@ -132,8 +127,4 @@ Desktop and mobile applications can be distributed directly to end-users, thereb
 As a result, **PKCE is necessary in these cases**. 
 
 For such cases you should use [PingOne SDK for JavaScript](https://github.com/pingidentity/pingone-javascript-sdk.git) that allows you to expose self-managed user authenticated APIs.
-
-# Development Notes
-This library uses `@ping-identity/p14c-js-sdk-core` not from npm registry, but the newly build version in [github](https://github.com/pingidentity/pingone-javascript-sdk/tree/master/packages/core/dist/node/%40ping-identity).
-You can copy it's content and put it instead of `/pingone-node-sdk/node_modules/@ping-identity/p14c-js-sdk-core/dist/node` it or make a symlink `ln -s /pingone-javascript-sdk/packages/core/* /pingone-node-sdk/node_modules/@ping-identity/p14c-js-sdk-core`
 
