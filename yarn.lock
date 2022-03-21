@@ -913,10 +913,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@ping-identity/p14c-js-sdk-core@^1.0.0-pre.1":
-  version "1.0.0-pre.1"
-  resolved "https://registry.yarnpkg.com/@ping-identity/p14c-js-sdk-core/-/p14c-js-sdk-core-1.0.0-pre.1.tgz#bcbd63d079039ef49a42e64bb564cfa144f99ffb"
-  integrity sha512-AdIlxbtxbpfcxD87UcDWYuJNL8CXVpdU6MqvEXUDlIPs+c7jFGwIXpYD8NB5Or3pKMUdIiXKWm8Irg6AwrElbA==
+"@ping-identity/p14c-js-sdk-core@^1.0.0-pre.2":
+  version "1.0.0-pre.2"
+  resolved "https://registry.yarnpkg.com/@ping-identity/p14c-js-sdk-core/-/p14c-js-sdk-core-1.0.0-pre.2.tgz#e6efef11ae618248d309cc3647aa2c7d36c5c113"
+  integrity sha512-TriLUYHkcvj8FY1qtbP/3vKz/5NuQS/KOxM5Z7B0fmbCqqb8SyfhkBapx5WTgIhdUht0Bk1Yx6VKg+pACkXlNQ==
   dependencies:
     cross-fetch "^3.0.5"
     js-cookie "^2.2.1"
@@ -1209,9 +1209,9 @@ ansi-regex@^4.1.0:
   integrity sha512-1apePfXM1UOSqw0o9IiFAovVz9M5S1Dg+4TrDwfMewQ6p/rmMueb7tWZjQ1rx4Loy1ArBggoqGpfqqdI4rondg==
 
 ansi-regex@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.0.tgz#388539f55179bf39339c81af30a654d69f87cb75"
-  integrity sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
+  integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
 
 ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   version "3.2.1"
@@ -2672,9 +2672,9 @@ glob-parent@^3.1.0:
     path-dirname "^1.0.0"
 
 glob-parent@^5.0.0, glob-parent@~5.1.0:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.1.tgz#b6c1ef417c4e5663ea498f1c45afac6916bbc229"
-  integrity sha512-FnI+VGOpnlGHWZxthPGR+QhR78fuiK0sNLkHQv+bL9fQi57lNNdquIbna/WrfROrolq8GK5Ek6BiMwqL/voRYQ==
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
+  integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
   dependencies:
     is-glob "^4.0.1"
 
