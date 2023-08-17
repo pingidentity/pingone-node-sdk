@@ -1,3 +1,5 @@
+# Deprecated
+
 # PingOne for Customers Node.js client SDK
 
 [![NPM version](https://img.shields.io/npm/v/@ping-identity/p14c-node-sdk.svg)](https://www.npmjs.com/package/@ping-identity/p14c-node-sdk)
